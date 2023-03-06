@@ -1,26 +1,49 @@
+# Specify the desired state of the application or 
+# service when it is deployed, including details such as the number of instances, 
+# the resources allocated to each instance, and any required network or storage configurations. 
+# The manifest is used by deployment tools and platforms, such as Kubernetes or Docker, to automate the process of deploying 
+# and managing the application or service in a cloud-based environment.
 apiVersion: apps/v1
 kind: Deployment
-metadata:
+metadata: # provide information about the deployment object itself
   name: auth
   labels:
-    app: auth
+    app: auth # used to identify the deployment as part of an application called auth
 spec:
-  replicas: 2
+  # The replicas field is used by the Kubernetes deployment controller to 
+  # manage the number of replicas of a pod template based on the desired state 
+  # specified in the deployment YAML file. 
+  # If the current number of replicas is less than the desired number of replicas,
+  # the deployment controller will create additional replicas.
+  # If the current number of replicas is greater than the desired number of replicas, 
+  # the deployment controller will terminate excess replicas.
+  replicas: 2 # indicates that the Kubernetes deployment controller should create and maintain 2 replicas of the pod template specified in the template field.
   selector:
     matchLabels:
       app: auth
   strategy:
+    # RollingUpdate is a deployment strategy in Kubernetes that allows for zero downtime updates of a deployment. 
+    # The strategy gradually replaces the old version of the deployment with the new version, 
+    # while ensuring that a certain number of pods from the old version are still running during the update.
     type: RollingUpdate
     rollingUpdate:
+      # The "maxSurge" parameter is used in conjunction with the RollingUpdate strategy to 
+      # control how many additional pods beyond the desired replica count can be created during the deployment update. 
+      # For example, if the replicas value is set to 2, and maxSurge is set to 3, 
+      # the deployment controller can create up to 5 pods during the update process to handle the increased load during update process.
       maxSurge: 3
   template:
     metadata:
       labels:
         app: auth
     spec:
+      # Define the container specifications for the deployment.
       containers:
         - name: auth
           image: thienng93/authsvc4:2.0.7
+          # The "name" field is used to specify the name of the container. 
+          # The "image" field is used to specify the Docker image that the container should be based on. 
+          # The "ports" field is used to specify the network ports that the container will use.
           ports:
             - containerPort: 5000
           envFrom:

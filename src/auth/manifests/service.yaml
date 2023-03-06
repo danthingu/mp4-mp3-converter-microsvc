@@ -1,12 +1,26 @@
+# Service is an abstract way to expose an application running on a set of pods as a network service. 
+# A Service provides a stable IP address and DNS name for a set of pods, 
+# allowing other applications to connect to them reliably.
 apiVersion: v1
 kind: Service
 metadata:
   name: auth
 spec:
-  selector:
+  selector:  # identify the pods that the Service will route traffic to
     app: auth
+# ClusterIP: A ClusterIP Service is the default type of Service in Kubernetes. 
+# It exposes the Service on a cluster-internal IP address, which means that the Service is only accessible from within the cluster.
+# This type of Service is useful for applications that need to communicate with each other within the cluster, but do not need to be accessed from outside the cluster.
+#
+# NodePort: A NodePort Service exposes the Service on a static port on each worker node in the cluster. 
+# This allows the Service to be accessed from outside the cluster using the IP address of any worker node and the static port number. 
+# This type of Service is useful for applications that need to be accessed from outside the cluster, but do not require a load balancer.
+#
+# LoadBalancer: A LoadBalancer Service exposes the Service outside the cluster using a cloud provider's load balancer. 
+# This type of Service is useful for applications that require high availability and scalability, and can handle a large volume of traffic. 
+# The load balancer distributes incoming traffic to the worker nodes that are running the pods that are part of the Service.
   type: ClusterIP
-  ports:
+  ports: # define the port that the Service will listen on
     - port: 5000
       targetPort: 5000
       protocol: TCP

@@ -1,3 +1,8 @@
+# An Ingress is an API object that manages external access to the services in a cluster, typically over HTTP. 
+# An Ingress allows you to expose multiple services under a single IP address and DNS name, 
+# and it can route traffic based on rules that you define.
+# By using ingress.yaml files, developers can ensure that their applications are easily accessible from outside the cluster, 
+# and that traffic is routed to the correct services based on the defined rules.
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -8,7 +13,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
     #nginx.ingress.kubernetes.io/proxy-max-temp-file-size: "1024m"
 spec:
-  rules:
+  rules: # rules that define how traffic should be routed to the services.
     - host: mp3converter.com
       http:
         paths:
