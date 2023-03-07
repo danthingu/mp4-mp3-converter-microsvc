@@ -1,3 +1,19 @@
+# A Kubernetes cluster that runs a database, such as MySQL or PostgreSQL, needs a 
+# Persistent Volume Claim (PVC) to ensure that the data stored by the database is persistent and 
+#does not get lost in case the pod or node fails or is deleted.
+
+# When a database pod is deleted, all the data stored in the pod's file system is lost unless it is stored in a Persistent Volume (PV). 
+# The PV is a cluster-level resource that is not tied to any specific pod or node, and it provides a persistent storage that can be accessed 
+# by multiple pods. However, a PV cannot be directly used by a pod, and this is where PVC comes into play.
+
+# A PVC is a request for storage made by a pod, which is bound to a PV to provide the pod with the necessary storage. 
+# When a pod requests storage from a PVC, Kubernetes dynamically creates a PV that matches the PVC's requirements, 
+# and then binds the PVC to the newly created PV. This allows the pod to use the persistent storage provided by the PV through the PVC.
+
+# In the case of a database running in a Kubernetes cluster, a PVC is necessary to ensure that the data stored 
+# by the database is persistent and not lost in case the pod or node fails or is deleted. With a PVC, the database pod can store its data 
+# in a PV, which is a persistent storage that can be accessed by multiple pods, and the data will remain intact even if the pod or node is destroyed.
+
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

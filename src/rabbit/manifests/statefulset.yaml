@@ -15,7 +15,7 @@ spec:
       containers:
         - name: rabbitmq
           image: rabbitmq:3-management
-          ports:
+          ports: #  listens on ports 5672 and 15672 for AMQP and http
             - name: http
               protocol: TCP
               containerPort: 15672
@@ -31,6 +31,6 @@ spec:
             - mountPath: "/var/lib/rabbitmq"
               name: rabbitmq-volume
       volumes:
-        - name: rabbitmq-volume
+        - name: rabbitmq-volume # store RabbitMQ data and logs
           persistentVolumeClaim:
             claimName: rabbitmq-pvc
